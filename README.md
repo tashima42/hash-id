@@ -1,1 +1,1 @@
-# RHASH
+# Rust Hash Identifier
