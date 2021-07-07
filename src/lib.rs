@@ -72,7 +72,7 @@ fn get_algorithms(config: Config) -> Vec<Algorithms> {
     if config.file.len() > 0 {
         let file_hashes = read_file_lines(config.file).unwrap();
         for hash in file_hashes.iter() {
-            let possible_algorithms = detect_algorithms(&config.hash);
+            let possible_algorithms = detect_algorithms(hash);
             hashes.push(Algorithms::new(hash.to_string(), possible_algorithms));
         }
     }
