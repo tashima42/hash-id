@@ -4,39 +4,92 @@ mod algorithms;
 
 use core::str;
 use std::collections::HashMap;
+use std::error::Error;
+use std::fs;
 
 use algorithms::*;
 
 pub fn run(config: Config) {
+    let algorithms = get_algorithms(config);
+
+    for algorithm in algorithms.iter() {
+        println!("Hash: {}", algorithm.hash);
+        if algorithm.algorithms.len() < 1 {
+            println!("  not found");
+        } else {
+            for alg in algorithm.algorithms.iter() {
+                println!("  [+] {}", alg);
+            }
+        };
+        println!("------------------------------------------");
+    }
+}
+
+fn detect_algorithms(hash: &String) -> Vec<String> {
     let algorithms_map: HashMap<u32, String> = create_algorithms_map();
-    let match_algorithms = run_algorithms_test(&config.hash);
+    let match_algorithms = run_algorithms_test(&hash);
+    let mut algorithms_name = vec![];
 
     for algorithm in match_algorithms.iter() {
-        println!("{}", algorithms_map.get(algorithm).unwrap());
+        algorithms_name.push(algorithms_map.get(algorithm).unwrap().to_string());
     }
-    //println!("algorithm: {}", &algorithm);
+    algorithms_name
 }
 
 pub struct Config {
     pub hash: String,
-    //pub filename: String,
+    pub file: String,
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &str> {
-        // TODO: add argument validation
-        /*
-        if args.len() < 3 {
-            return Err("Not enough arguments");
-        }
-        */
-        let hash = args[1].clone();
-        //let filename = args[2].clone();
+    pub fn new(args: &[String]) -> Config {
+        let hash = args[0].clone();
+        let file = args[1].clone();
 
-        Ok(Config {
-            hash, /*, filename */
-        })
+        Config { hash, file }
     }
+}
+
+struct Algorithms {
+    pub hash: String,
+    pub algorithms: Vec<String>,
+}
+
+impl Algorithms {
+    pub fn new(hash: String, algorithms: Vec<String>) -> Algorithms {
+        Algorithms { hash, algorithms }
+    }
+}
+
+fn get_algorithms(config: Config) -> Vec<Algorithms> {
+    let mut hashes = vec![];
+
+    if config.hash.len() > 0 {
+        let possible_algorithms = detect_algorithms(&config.hash);
+        hashes.push(Algorithms::new(config.hash.clone(), possible_algorithms));
+    }
+
+    if config.file.len() > 0 {
+        let file_hashes = read_file_lines(config.file).unwrap();
+        for hash in file_hashes.iter() {
+            let possible_algorithms = detect_algorithms(&config.hash);
+            hashes.push(Algorithms::new(hash.to_string(), possible_algorithms));
+        }
+    }
+
+    hashes
+}
+
+fn read_file_lines(file: String) -> Result<Vec<String>, Box<dyn Error>> {
+    let content = fs::read_to_string(file).unwrap();
+
+    let mut lines: Vec<String> = vec![];
+
+    for line in content.lines() {
+        lines.push(line.to_string());
+    }
+
+    Ok(lines)
 }
 
 fn run_algorithms_test(hash: &str) -> Vec<u32> {
@@ -45,499 +98,375 @@ fn run_algorithms_test(hash: &str) -> Vec<u32> {
     if CRC16(hash) {
         algorithms.push(101020);
     }
-
     if CRC16CCITT(hash) {
         algorithms.push(101040);
     }
-
     if FCS16(hash) {
         algorithms.push(101060);
     }
-
     if ADLER32(hash) {
         algorithms.push(102020);
     }
-
     if CRC32(hash) {
         algorithms.push(102040);
     }
-
     if CRC32B(hash) {
         algorithms.push(102060);
     }
-
     if XOR32(hash) {
         algorithms.push(102080);
     }
-
     if GHash325(hash) {
         algorithms.push(103020);
     }
-
     if GHash323(hash) {
         algorithms.push(103040);
     }
-
     if DESUnix(hash) {
         algorithms.push(104020);
     }
-
     if MySQL(hash) {
         algorithms.push(105020);
     }
-
     if MD5Middle(hash) {
         algorithms.push(105040);
     }
-
     if MD5Half(hash) {
         algorithms.push(105060);
     }
-
     if MD5(hash) {
         algorithms.push(106020);
     }
-
     if DomainCachedCredentials(hash) {
         algorithms.push(106025);
     }
-
     if RAdminv2x(hash) {
         algorithms.push(106027);
     }
-
     if NTLM(hash) {
         algorithms.push(106029);
     }
-
     if MD4(hash) {
         algorithms.push(106040);
     }
-
     if MD2(hash) {
         algorithms.push(106060);
     }
-
     if MD5HMAC(hash) {
         algorithms.push(106080);
     }
-
     if MD4HMAC(hash) {
         algorithms.push(106100);
     }
-
     if MD2HMAC(hash) {
         algorithms.push(106120);
     }
-
     if MD5HMACWordpress(hash) {
         algorithms.push(106140);
     }
-
     if Haval128(hash) {
         algorithms.push(106160);
     }
-
     if Haval128HMAC(hash) {
         algorithms.push(106165);
     }
-
     if RipeMD128(hash) {
         algorithms.push(106180);
     }
-
     if RipeMD128HMAC(hash) {
         algorithms.push(106185);
     }
-
     if SNEFRU128(hash) {
         algorithms.push(106200);
     }
-
     if SNEFRU128HMAC(hash) {
         algorithms.push(106205);
     }
-
     if Tiger128(hash) {
         algorithms.push(106220);
     }
-
     if Tiger128HMAC(hash) {
         algorithms.push(106225);
     }
-
     if md5passsalt(hash) {
         algorithms.push(106240);
     }
-
     if md5saltmd5pass(hash) {
         algorithms.push(106260);
     }
-
     if md5saltpass(hash) {
         algorithms.push(106280);
     }
-
     if md5saltpasssalt(hash) {
         algorithms.push(106300);
     }
-
     if md5saltpassusername(hash) {
         algorithms.push(106320);
     }
-
     if md5saltmd5pass(hash) {
         algorithms.push(106340);
     }
-
     if md5saltmd5passsalt(hash) {
         algorithms.push(106360);
     }
-
     if md5saltmd5passsalt1(hash) {
         algorithms.push(106380);
     }
-
     if md5saltmd5saltpass2(hash) {
         algorithms.push(106400);
     }
-
     if md5saltmd5md5passsalt(hash) {
         algorithms.push(106420);
     }
-
     if md5username0pass(hash) {
         algorithms.push(106440);
     }
-
     if md5usernameLFpass(hash) {
         algorithms.push(106460);
     }
-
     if md5usernamemd5passsalt(hash) {
         algorithms.push(106480);
     }
-
     if md5md5pass(hash) {
         algorithms.push(106500);
     }
-
     if md5md5passsalt(hash) {
         algorithms.push(106520);
     }
-
     if md5md5passmd5salt(hash) {
         algorithms.push(106540);
     }
-
     if md5md5saltpass(hash) {
         algorithms.push(106560);
     }
-
     if md5md5saltmd5pass(hash) {
         algorithms.push(106580);
     }
-
     if md5md5usernamepasssalt(hash) {
         algorithms.push(106600);
     }
-
     if md5md5md5pass(hash) {
         algorithms.push(106620);
     }
-
     if md5md5md5md5pass(hash) {
         algorithms.push(106640);
     }
-
     if md5md5md5md5md5pass(hash) {
         algorithms.push(106660);
     }
-
     if md5sha1pass(hash) {
         algorithms.push(106680);
     }
-
     if md5sha1md5pass(hash) {
         algorithms.push(106700);
     }
-
     if md5sha1md5sha1pass(hash) {
         algorithms.push(106720);
     }
-
     if md5strtouppermd5pass(hash) {
         algorithms.push(106740);
     }
-
     if MD5Wordpress(hash) {
         algorithms.push(107020);
     }
-
     if MD5phpBB3(hash) {
         algorithms.push(107040);
     }
-
     if MD5Unix(hash) {
         algorithms.push(107060);
     }
-
     if LineageIIC4(hash) {
         algorithms.push(107080);
     }
-
     if MD5APR(hash) {
         algorithms.push(108020);
     }
-
     if SHA1(hash) {
         algorithms.push(109020);
     }
-
     if MySQL5(hash) {
         algorithms.push(109040);
     }
-
     if MySQL160bit(hash) {
         algorithms.push(109060);
     }
-
     if Tiger160(hash) {
         algorithms.push(109080);
     }
-
     if Haval160(hash) {
         algorithms.push(109100);
     }
-
     if RipeMD160(hash) {
         algorithms.push(109120);
     }
-
     if SHA1HMAC(hash) {
         algorithms.push(109140);
     }
-
     if Tiger160HMAC(hash) {
         algorithms.push(109160);
     }
-
     if RipeMD160HMAC(hash) {
         algorithms.push(109180);
     }
-
     if Haval160HMAC(hash) {
         algorithms.push(109200);
     }
-
     if SHA1MaNGOS(hash) {
         algorithms.push(109220);
     }
-
     if SHA1MaNGOS2(hash) {
         algorithms.push(109240);
     }
-
     if sha1passsalt(hash) {
         algorithms.push(109260);
     }
-
     if sha1saltpass(hash) {
         algorithms.push(109280);
     }
-
     if sha1saltmd5pass(hash) {
         algorithms.push(109300);
     }
-
     if sha1saltmd5passsalt(hash) {
         algorithms.push(109320);
     }
-
     if sha1saltsha1pass(hash) {
         algorithms.push(109340);
     }
-
     if sha1saltsha1saltsha1pass(hash) {
         algorithms.push(109360);
     }
-
     if sha1usernamepass(hash) {
         algorithms.push(109380);
     }
-
     if sha1usernamepasssalt(hash) {
         algorithms.push(109400);
     }
-
     if sha1md5passsalt(hash) {
         algorithms.push(109440);
     }
-
     if sha1md5sha1pass(hash) {
         algorithms.push(109460);
     }
-
     if sha1sha1pass(hash) {
         algorithms.push(109480);
     }
-
     if sha1sha1passsalt(hash) {
         algorithms.push(109500);
     }
-
     if sha1sha1passsubstrpass03(hash) {
         algorithms.push(109520);
     }
-
     if sha1sha1saltpass(hash) {
         algorithms.push(109540);
     }
-
     if sha1sha1sha1pass(hash) {
         algorithms.push(109560);
     }
-
     if sha1strtolowerusernamepass(hash) {
         algorithms.push(109580);
     }
-
     if Tiger192(hash) {
         algorithms.push(110020);
     }
-
     if Haval192(hash) {
         algorithms.push(110040);
     }
-
     if Tiger192HMAC(hash) {
         algorithms.push(110060);
     }
-
     if Haval192HMAC(hash) {
         algorithms.push(110080);
     }
-
     if MD5passsaltjoomla1(hash) {
         algorithms.push(112020);
     }
-
     if SHA1Django(hash) {
         algorithms.push(113020);
     }
-
     if SHA224(hash) {
         algorithms.push(114020);
     }
-
     if Haval224(hash) {
         algorithms.push(114040);
     }
-
     if SHA224HMAC(hash) {
         algorithms.push(114060);
     }
-
     if Haval224HMAC(hash) {
         algorithms.push(114080);
     }
-
     if SHA256(hash) {
         algorithms.push(115020);
     }
-
     if Haval256(hash) {
         algorithms.push(115040);
     }
-
     if GOSTR341194(hash) {
         algorithms.push(115060);
     }
-
     if RipeMD256(hash) {
         algorithms.push(115080);
     }
-
     if SNEFRU256(hash) {
         algorithms.push(115100);
     }
-
     if SHA256HMAC(hash) {
         algorithms.push(115120);
     }
-
     if Haval256HMAC(hash) {
         algorithms.push(115140);
     }
-
     if RipeMD256HMAC(hash) {
         algorithms.push(115160);
     }
-
     if SNEFRU256HMAC(hash) {
         algorithms.push(115180);
     }
-
     if SHA256md5pass(hash) {
         algorithms.push(115200);
     }
-
     if SHA256sha1pass(hash) {
         algorithms.push(115220);
     }
-
     if MD5passsaltjoomla2(hash) {
         algorithms.push(116020);
     }
-
     if SAM(hash) {
         algorithms.push(116040);
     }
-
     if SHA256Django(hash) {
         algorithms.push(117020);
     }
-
     if RipeMD320(hash) {
         algorithms.push(118020);
     }
-
     if RipeMD320HMAC(hash) {
         algorithms.push(118040);
     }
-
     if SHA384(hash) {
         algorithms.push(119020);
     }
-
     if SHA384HMAC(hash) {
         algorithms.push(119040);
     }
-
     if SHA256s(hash) {
         algorithms.push(120020);
     }
-
     if SHA384Django(hash) {
         algorithms.push(121020);
     }
-
     if SHA512(hash) {
         algorithms.push(122020);
     }
-
     if Whirlpool(hash) {
         algorithms.push(122040);
     }
-
     if SHA512HMAC(hash) {
         algorithms.push(122060);
     }
-
     if WhirlpoolHMAC(hash) {
         algorithms.push(122080);
     }
-
     if sha1md5pass(hash) {
         algorithms.push(1094202);
     }

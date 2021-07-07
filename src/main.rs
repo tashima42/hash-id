@@ -1,21 +1,34 @@
-use std::env;
-use std::process;
+extern crate clap;
+use clap::{App, Arg};
 
-use rhash::Config;
+use hash_id_rust::{run, Config};
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let matches = App::new("Rust Hash Identifier")
+        .version("0.1.0")
+        .author("Pedro Tashima <pedrotashima@protonmail.com>")
+        .about("Identify different types of hashes")
+        .arg(
+            Arg::with_name("hash")
+                .short("h") //TODO: change to h
+                .long("hash")
+                .value_name("STRING")
+                .help("Hash value to be identified")
+                .takes_value(true),
+        )
+        .arg(
+            Arg::with_name("file")
+                .short("f")
+                .long("file")
+                .value_name("FILE")
+                .help("File containing hashes to be identified")
+                .takes_value(true),
+        )
+        .get_matches();
 
-    let config = Config::new(&args).unwrap_or_else(|err| {
-        eprintln!("Problem parsing arguments: {}", err);
-        process::exit(1);
-    });
+    let hash = matches.value_of("hash").unwrap_or_default();
+    let file = matches.value_of("file").unwrap_or_default();
 
-    /*
-    if let Err(e) = rhash::run(config) {
-        eprintln!("Application error: {}", e);
-        process::exit(1);
-    };
-    */
-    rhash::run(config);
+    let config = Config::new(&vec![hash.to_string(), file.to_string()]);
+    run(config);
 }
