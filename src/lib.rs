@@ -10,19 +10,69 @@ use std::fs;
 use algorithms::*;
 
 pub fn run(config: Config) {
-    let algorithms = get_algorithms(config);
+    let hash_possible_algorithms = get_possible_algorithms(config);
 
-    for algorithm in algorithms.iter() {
+    for algorithm in hash_possible_algorithms.iter() {
         println!("Hash: {}", algorithm.hash);
-        if algorithm.algorithms.len() < 1 {
+        if algorithm.possible_algorithms.len() < 1 {
             println!("  not found");
         } else {
-            for alg in algorithm.algorithms.iter() {
+            for alg in algorithm.possible_algorithms.iter() {
                 println!("  [+] {}", alg);
             }
         };
         println!("------------------------------------------");
     }
+}
+
+pub struct Config {
+    pub hash: String,
+    pub file: String,
+}
+
+impl Config {
+    pub fn new(hash: String, file: String) -> Config {
+        Config { hash, file }
+    }
+}
+
+struct PossibleAlgorithms {
+    pub hash: String,
+    pub possible_algorithms: Vec<String>,
+}
+
+impl PossibleAlgorithms {
+    pub fn new(hash: String, possible_algorithms: Vec<String>) -> PossibleAlgorithms {
+        PossibleAlgorithms {
+            hash,
+            possible_algorithms,
+        }
+    }
+}
+
+fn get_possible_algorithms(config: Config) -> Vec<PossibleAlgorithms> {
+    let mut possible_algorithms = vec![];
+
+    if config.hash.len() > 0 {
+        let detected_algorithms = detect_algorithms(&config.hash);
+        possible_algorithms.push(PossibleAlgorithms::new(
+            config.hash.clone(),
+            detected_algorithms,
+        ));
+    }
+
+    if config.file.len() > 0 {
+        let file_hashes = read_file_lines(config.file).unwrap();
+        for hash in file_hashes.iter() {
+            let detected_algorithms = detect_algorithms(hash);
+            possible_algorithms.push(PossibleAlgorithms::new(
+                hash.to_string(),
+                detected_algorithms,
+            ));
+        }
+    }
+
+    possible_algorithms
 }
 
 fn detect_algorithms(hash: &String) -> Vec<String> {
@@ -34,50 +84,6 @@ fn detect_algorithms(hash: &String) -> Vec<String> {
         algorithms_name.push(algorithms_map.get(algorithm).unwrap().to_string());
     }
     algorithms_name
-}
-
-pub struct Config {
-    pub hash: String,
-    pub file: String,
-}
-
-impl Config {
-    pub fn new(args: &[String]) -> Config {
-        let hash = args[0].clone();
-        let file = args[1].clone();
-
-        Config { hash, file }
-    }
-}
-
-struct Algorithms {
-    pub hash: String,
-    pub algorithms: Vec<String>,
-}
-
-impl Algorithms {
-    pub fn new(hash: String, algorithms: Vec<String>) -> Algorithms {
-        Algorithms { hash, algorithms }
-    }
-}
-
-fn get_algorithms(config: Config) -> Vec<Algorithms> {
-    let mut hashes = vec![];
-
-    if config.hash.len() > 0 {
-        let possible_algorithms = detect_algorithms(&config.hash);
-        hashes.push(Algorithms::new(config.hash.clone(), possible_algorithms));
-    }
-
-    if config.file.len() > 0 {
-        let file_hashes = read_file_lines(config.file).unwrap();
-        for hash in file_hashes.iter() {
-            let possible_algorithms = detect_algorithms(hash);
-            hashes.push(Algorithms::new(hash.to_string(), possible_algorithms));
-        }
-    }
-
-    hashes
 }
 
 fn read_file_lines(file: String) -> Result<Vec<String>, Box<dyn Error>> {

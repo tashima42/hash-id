@@ -4,7 +4,7 @@ use clap::{App, Arg};
 use hash_id_rust::{run, Config};
 
 fn main() {
-    let matches = App::new("Rust Hash Identifier")
+    let matches = App::new("Hash Identifier")
         .version("0.1.0")
         .author("Pedro Tashima <pedrotashima@protonmail.com>")
         .about("Identify different types of hashes")
@@ -21,7 +21,7 @@ fn main() {
                 .short("f")
                 .long("file")
                 .value_name("FILE")
-                .help("File containing hashes to be identified")
+                .help("File containing hashes (each one in a line)")
                 .takes_value(true),
         )
         .get_matches();
@@ -29,6 +29,6 @@ fn main() {
     let hash = matches.value_of("hash").unwrap_or_default();
     let file = matches.value_of("file").unwrap_or_default();
 
-    let config = Config::new(&vec![hash.to_string(), file.to_string()]);
+    let config = Config::new(hash.to_string(), file.to_string());
     run(config);
 }
