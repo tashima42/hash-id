@@ -62,7 +62,7 @@ hash-id [OPTIONS]
 Currently, just a snap package is suported. If you want to maintain a distro specific package, please check the [contributing](##Contributing) section.
   * Snap
     ```
-    sudo snap install hash-id
+    sudo snap install hash-id --beta
     ```
 
 ## Contributing
