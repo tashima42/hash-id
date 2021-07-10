@@ -6,7 +6,7 @@ description: |
   based on Zion3R implementation.
 
 base: core18
-confinement: classic
+confinement: strict
 
 parts:
   hash-id:
@@ -16,3 +16,5 @@ parts:
 apps:
   hash-id:
     command: bin/hash-id-rust
+    plugs:
+      - home
