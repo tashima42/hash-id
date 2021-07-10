@@ -7,6 +7,10 @@ ____
 **hash-id** is a command line program for identifying **hash types** based on [Zion3R's implementation](https://github.com/blackploit/hash-identifier).   
 This software is meant for enumeration, this is **not** a hash cracking tool, and it isn't definitive, the only way to be sure of the algorithm is after the hash has been reversed.    
 
+* [Usage](#usage)
+* [Install](#install)
+* [Contributing](#contributing)
+
 ## Usage
 ```
 hash-id [OPTIONS]
@@ -68,6 +72,8 @@ Currently, just a snap package is suported. If you want to maintain a distro spe
 ## Contributing
 Thank you for wanting to contribute to this project! Here are some ways you can help:
   * Translating this documentation to your language
+  * Maintaning a package
+  * Improving error handling
   * Creating documentation
   * Refactoring code (PRs are always welcome)
   * Adding more functionality    
