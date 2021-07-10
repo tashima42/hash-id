@@ -1,4 +1,5 @@
 # Hash Identifier
+[![forthebadge](https://forthebadge.com/images/badges/made-with-rust.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com)
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/hash-id)
 
@@ -68,6 +69,7 @@ Currently, just a snap package is suported. If you want to maintain a distro spe
     ```
     sudo snap install hash-id --beta
     ```
+    **!!!!**: Because of snap confinement policy, this package can only access files on your `/home` folder. If you really need it to access files on other folders, maybe you should build it from source (`cargo build --release`).
 
 ## Contributing
 Thank you for wanting to contribute to this project! Here are some ways you can help:
