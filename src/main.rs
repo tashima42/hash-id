@@ -10,7 +10,7 @@ fn main() {
         .about("Identify different types of hashes")
         .arg(
             Arg::with_name("hash")
-                .short("h") //TODO: change to h
+                .short("h") 
                 .long("hash")
                 .value_name("STRING")
                 .help("Hash value to be identified")

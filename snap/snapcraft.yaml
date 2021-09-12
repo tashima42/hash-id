@@ -2,8 +2,7 @@ name: hash-id
 version: git
 summary: Hash Identifier program written in Rust
 description: |
-  hash-id is a command line program for identifying hash types
-  based on Zion3R implementation.
+  hash-id is a command line program for identifying hash types. 
 
 base: core18
 confinement: strict
