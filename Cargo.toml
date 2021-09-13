@@ -10,6 +10,10 @@ repository = "https://github.com/tashima42/hash-id/"
 documentation = "https://github.com/tashima42/hash-id/#readme"
 readme = "README.md"
 
+exclude = [
+  "snap"
+]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
