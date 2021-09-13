@@ -1,7 +1,7 @@
 extern crate clap;
 use clap::{App, Arg};
 
-use hash_id_rust::{run, Config};
+use hash_id::{run, Config};
 
 fn main() {
     let matches = App::new("Hash Identifier")
