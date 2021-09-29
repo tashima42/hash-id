@@ -8,6 +8,8 @@ ____
 **hash-id** is a command line program for identifying **hash types** based on [Zion3R's implementation](https://github.com/blackploit/hash-identifier).   
 This software is meant for enumeration, this is **not** a hash cracking tool, and it isn't definitive, the only way to be sure of the algorithm is after the hash has been reversed.    
 
+[![asciicast](https://asciinema.org/a/435162.svg)](https://asciinema.org/a/435162)
+
 * [Usage](#usage)
 * [Install](#install)
 * [Contributing](#contributing)
