@@ -64,12 +64,17 @@ hash-id [OPTIONS]
   * A hash argument and a file can be used at the same time.
 
 ## Install
-Currently, just a snap package is suported. If you want to maintain a distro specific package, please check the [contributing](##Contributing) section.
+Currently, are are supported: a snap package, a deb package and an Arch package. If you want to maintain a distro specific package, please check the [contributing](##Contributing) section.
   * Snap
     ```
-    sudo snap install hash-id --beta
+    sudo snap install hash-id
     ```
-    **!!!!**: Because of snap confinement policy, this package can only access files on your `/home` folder. If you really need it to access files on other folders, maybe you should build it from source (`cargo build --release`).
+    **!!!!**: Because of snap confinement policy, this package can only access files on your `/home` folder. If you really need it to access files on other folders, install another package, or consider building it from source (`cargo build --release`).
+  * Debian
+    * Download the latest `.deb` package from the [releases page](https://github.com/Tashima42/hash-id/releases)
+      ```
+      sudo dpkg -i $DIR/hash-id_0.1.0_amd64.deb
+      ```
 
 ## Contributing
 Thank you for wanting to contribute to this project! Here are some ways you can help:
