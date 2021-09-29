@@ -20,11 +20,11 @@ hash-id [OPTIONS]
 **Examples:**
   * Using a CLI argument
     ```
-    $ hash-id -h fc7feb971470bd3d08d241f88db1ea38
+    hash-id -h fc7feb971470bd3d08d241f88db1ea38
     ```
   * Using a text file
     ```
-    $ hash-id -f ./hashes.txt
+    hash-id -f ./hashes.txt
     ```
   * Output: 
     ```
