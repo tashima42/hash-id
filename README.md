@@ -10,7 +10,7 @@ This software is meant for enumeration, this is **not** a hash cracking tool, an
 
 * [Usage](#usage)
 * [Install](#install)
-* [Contributing](#contributing)
+* [Contributing](https://github.com/Tashima42/hash-id/blob/main/CONTRIBUTING.md)
 
 [![asciicast](https://asciinema.org/a/435162.svg)](https://asciinema.org/a/435162)
 
@@ -77,14 +77,5 @@ Currently, are are supported: a snap package, a deb package and an Arch package.
       ```
       sudo dpkg -i $DIR/hash-id_0.1.0_amd64.deb
       ```
-
-## Contributing
-Thank you for wanting to contribute to this project! Here are some ways you can help:
-  * Translating this documentation to your language
-  * Maintaning a package
-  * Improving error handling
-  * Creating documentation
-  * Refactoring code (PRs are always welcome)
-  * Adding more functionality    
 
 Always before starting to work on something, check the [issues](https://github.com/Tashima42/hash-id-rust/issues) to see if anyone else is working on the same thing, if anyone is working and you want to start, please create an issue and let me know. Code changing PRs without an issue will not be accepted.
