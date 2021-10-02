@@ -16,3 +16,7 @@ target/
 
 # Text Editors and IDEs
 .vscode
+
+# Arch packaging
+arch/hash-id
+arch/hash-id-*.pkg.tar.zst
