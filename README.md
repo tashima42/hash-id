@@ -66,7 +66,7 @@ hash-id [OPTIONS]
   * A hash argument and a file can be used at the same time.
 
 ## Install
-Currently, are are supported: a snap package, a deb package and an Arch package. If you want to maintain a distro specific package, please check the [contributing](##Contributing) section.
+Currently, are supported: a snap package, a deb package and an Arch package. If you want to maintain a distro specific package, please check the [contributing](https://github.com/Tashima42/hash-id/blob/main/CONTRIBUTING.md) section.
   * Snap
     ```
     sudo snap install hash-id
@@ -77,5 +77,10 @@ Currently, are are supported: a snap package, a deb package and an Arch package.
       ```
       sudo dpkg -i $DIR/hash-id_0.1.0_amd64.deb
       ```
+  * Arch
+    * Use the [AUR](https://aur.archlinux.org/packages/hash-id/) package, or the [`PKGBUILD`](https://github.com/Tashima42/hash-id/blob/main/arch/PKGBUILD)
+    ```
+    yay -S hash-id
+    ```  
 
 Always before starting to work on something, check the [issues](https://github.com/Tashima42/hash-id-rust/issues) to see if anyone else is working on the same thing, if anyone is working and you want to start, please create an issue and let me know. Code changing PRs without an issue will not be accepted.
