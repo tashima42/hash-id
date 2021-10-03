@@ -15,17 +15,17 @@ This software is meant for enumeration, this is **not** a hash cracking tool, an
 [![asciicast](https://asciinema.org/a/435162.svg)](https://asciinema.org/a/435162)
 
 ## Usage
-```
+```sh
 hash-id [OPTIONS]
 ```   
 
 **Examples:**
   * Using a CLI argument
-    ```
+    ```sh
     hash-id -h fc7feb971470bd3d08d241f88db1ea38
     ```
   * Using a text file
-    ```
+    ```sh
     hash-id -f ./hashes.txt
     ```
   * Output: 
@@ -68,19 +68,20 @@ hash-id [OPTIONS]
 ## Install
 Currently, are supported: a snap package, a deb package and an Arch package. If you want to maintain a distro specific package, please check the [contributing](https://github.com/Tashima42/hash-id/blob/main/CONTRIBUTING.md) section.
   * Snap
-    ```
+    ```sh
     sudo snap install hash-id
     ```
     **!!!!**: Because of snap confinement policy, this package can only access files on your `/home` folder. If you really need it to access files on other folders, install another package, or consider building it from source (`cargo build --release`).
   * Debian
     * Download the latest `.deb` package from the [releases page](https://github.com/Tashima42/hash-id/releases)
-      ```
+      ```sh
       sudo dpkg -i $DIR/hash-id_0.1.0_amd64.deb
       ```
   * Arch
     * Use the [AUR](https://aur.archlinux.org/packages/hash-id/) package, or the [`PKGBUILD`](https://github.com/Tashima42/hash-id/blob/main/arch/PKGBUILD)
-    ```
-    yay -S hash-id
+    ```sh
+    yay -S hash-id # Using AUR -- OR
+    makepkg -i # In the same folder as the PKGBUILD file
     ```  
 
 Always before starting to work on something, check the [issues](https://github.com/Tashima42/hash-id-rust/issues) to see if anyone else is working on the same thing, if anyone is working and you want to start, please create an issue and let me know. Code changing PRs without an issue will not be accepted.
