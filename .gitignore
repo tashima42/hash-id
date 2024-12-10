@@ -20,3 +20,7 @@ target/
 # Arch packaging
 arch/hash-id
 arch/hash-id-*.pkg.tar.zst
+
+.cargo
+.osc
+hash-id.tar.gz
