@@ -5,8 +5,8 @@
 
 ____
 
-**hash-id** is a command line program for identifying **hash types** based on [Zion3R's implementation](https://github.com/blackploit/hash-identifier).   
-This software is meant for enumeration, this is **not** a hash cracking tool, and it isn't definitive, the only way to be sure of the algorithm is after the hash has been reversed.    
+**hash-id** is a command line program for identifying **hash types** based on [Zion3R's implementation](https://github.com/blackploit/hash-identifier).
+This software is meant for enumeration, this is **not** a hash cracking tool, and it isn't definitive, the only way to be sure of the algorithm is after the hash has been reversed.
 
 * [Usage](#usage)
 * [Install](#install)
@@ -17,7 +17,7 @@ This software is meant for enumeration, this is **not** a hash cracking tool, an
 ## Usage
 ```sh
 hash-id [OPTIONS]
-```   
+```
 
 **Examples:**
   * Using a CLI argument
@@ -28,7 +28,7 @@ hash-id [OPTIONS]
     ```sh
     hash-id -f ./hashes.txt
     ```
-  * Output: 
+  * Output:
     ```
     $ hash-id -f ./hashes.txt -h fc7feb971470bd3d08d241f88db1ea38
     > Hash: b89eaac7e61417341b710b727768294d0e6a277b
@@ -44,25 +44,25 @@ hash-id [OPTIONS]
     >    [+] Domain Cached Credentials - MD4(MD4(($pass)).(strtolower($username)))
     >    [+] RAdmin v2.x
     >    [+] NTLM
-    >    [+] MD4 
+    >    [+] MD4
     >  #(...)
     > ------------------------------------------
     >  #(...)
     ```
-**Options**:    
+**Options**:
 | short | long     | type     | description                                 |
 |-------|----------|----------|---------------------------------------------|
 | `-f`  | `--file` | FILE     | File containing hashes (each one in a line) |
 | `-h`  | `--hash` | STRING   | Hash value to be identified                 |
 
-**Flags**:    
+**Flags**:
 | short | long        | description                 |
 |-------|-------------|-----------------------------|
 |       | `--help`    | Prints help information     |
 | `-V`  | `--version` | Prints version information  |
 
-**Info**:   
-  * Algorithms are displayed in order of probability, so you should start testing by the first. 
+**Info**:
+  * Algorithms are displayed in order of probability, so you should start testing by the first.
   * A hash argument and a file can be used at the same time.
 
 ## Install
@@ -81,10 +81,10 @@ Currently, are supported: a snap package, a deb package and an Arch package. If 
     * Use the [AUR](https://aur.archlinux.org/packages/hash-id/) package
       ```sh
       yay -S hash-id # Using AUR and [yay](https://github.com/Jguer/yay)
-      ```  
+      ```
     * Or the [`PKGBUILD`](https://github.com/Tashima42/hash-id/blob/main/arch/PKGBUILD)
       ```sh
       makepkg -i # In the same folder as the PKGBUILD file
-      ```  
+      ```
 
 Always before starting to work on something, check the [issues](https://github.com/Tashima42/hash-id-rust/issues) to see if anyone else is working on the same thing, if anyone is working and you want to start, please create an issue and let me know. Code changing PRs without an issue will not be accepted.

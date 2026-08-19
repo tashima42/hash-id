@@ -1,5 +1,5 @@
 extern crate clap;
-use clap::{Command, Arg};
+use clap::{Arg, Command};
 
 use hash_id::{run, Config};
 
@@ -10,7 +10,7 @@ fn main() {
         .about("Identify different types of hashes")
         .arg(
             Arg::new("hash")
-                .short('h') 
+                .short('h')
                 .long("hash")
                 .value_name("STRING")
                 .help("Hash value to be identified")

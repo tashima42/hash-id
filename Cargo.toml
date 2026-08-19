@@ -2,7 +2,7 @@
 name = "hash-id"
 version = "0.1.1"
 authors = ["Pedro Tashima <pedrotashima42@gmail.com>"]
-edition = "2018"
+edition = "2024"
 license-file = "LICENSE"
 description = "Hash Identifying tool"
 homepage = "https://github.com/tashima42/hash-id/"

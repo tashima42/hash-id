@@ -1,5 +1,5 @@
-#[allow(unused_imports)]
-#[allow(non_snake_case)]
+#![allow(unused_imports)]
+#![allow(non_snake_case)]
 mod algorithms;
 
 use core::str;
@@ -14,7 +14,7 @@ pub fn run(config: Config) {
 
     for algorithm in hash_possible_algorithms.iter() {
         println!("Hash: {}", algorithm.hash);
-        if algorithm.possible_algorithms.len() < 1 {
+        if algorithm.possible_algorithms.is_empty() {
             println!("  not found");
         } else {
             for alg in algorithm.possible_algorithms.iter() {
@@ -53,7 +53,7 @@ impl PossibleAlgorithms {
 fn get_possible_algorithms(config: Config) -> Vec<PossibleAlgorithms> {
     let mut possible_algorithms = vec![];
 
-    if config.hash.len() > 0 {
+    if !config.hash.is_empty() {
         let detected_algorithms = detect_algorithms(&config.hash);
         possible_algorithms.push(PossibleAlgorithms::new(
             config.hash.clone(),
@@ -61,7 +61,7 @@ fn get_possible_algorithms(config: Config) -> Vec<PossibleAlgorithms> {
         ));
     }
 
-    if config.file.len() > 0 {
+    if !config.file.is_empty() {
         let file_hashes = read_file_lines(config.file).unwrap();
         for hash in file_hashes.iter() {
             let detected_algorithms = detect_algorithms(hash);
@@ -75,9 +75,9 @@ fn get_possible_algorithms(config: Config) -> Vec<PossibleAlgorithms> {
     possible_algorithms
 }
 
-fn detect_algorithms(hash: &String) -> Vec<String> {
+fn detect_algorithms(hash: &str) -> Vec<String> {
     let algorithms_map: HashMap<u32, String> = create_algorithms_map();
-    let match_algorithms = run_algorithms_test(&hash);
+    let match_algorithms = run_algorithms_test(hash);
     let mut algorithms_name = vec![];
 
     for algorithm in match_algorithms.iter() {
