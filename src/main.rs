@@ -1,7 +1,8 @@
 extern crate clap;
-use clap::{Arg, Command};
 
-use hash_id::{run, Config};
+use clap::{Arg, ArgAction, Command};
+
+use hash_id::{Config, run};
 
 fn main() {
     let matches = Command::new("Hash Identifier")
@@ -10,24 +11,23 @@ fn main() {
         .about("Identify different types of hashes")
         .arg(
             Arg::new("hash")
-                .short('h')
                 .long("hash")
                 .value_name("STRING")
                 .help("Hash value to be identified")
-                .takes_value(true),
+                .action(ArgAction::Set),
         )
         .arg(
             Arg::new("file")
-                .short('f')
                 .long("file")
                 .value_name("FILE")
                 .help("File containing hashes (each one in a line)")
-                .takes_value(true),
+                .action(ArgAction::Set),
         )
         .get_matches();
 
-    let hash = matches.value_of("hash").unwrap_or_default();
-    let file = matches.value_of("file").unwrap_or_default();
+    let input_default = String::new();
+    let hash = matches.get_one::<String>("hash").unwrap_or(&input_default);
+    let file = matches.get_one::<String>("file").unwrap_or(&input_default);
 
     let config = Config::new(hash.to_string(), file.to_string());
     run(config);
